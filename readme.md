@@ -1,7 +1,11 @@
-# Goal
+<p align="center">
+	<img width="100%" src="https://github.com/./example.png">
+</p>
+
+# FpsCpu
 `FpsCpu` is meant to be a simple `C++` based utility which converts mesh files (`*.obj`) to pointclouds. The data is down-sampled using Farthest Point Sampling algorithm (FPS). The results could be exported in various formats such as HDF5 (`*.h5`), PCL (`*.pcd`), and ...
 
-# Dev Status
+# Development Status
 - [x] CPU-only, Single-thread
 - [ ] CPU-only, Multi-thread
 - [ ] CPU-only, Multi-thread, Batch Operation Support
@@ -30,6 +34,21 @@ Options:
     -h, --help             Shows this page 
 
 ```
+
+# Example
+```
+$ git clone https://github.com/salehjg/MeshToPointcloudFPS.git
+$ cd MeshToPointcloudFPS
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j8
+$ ./FpsCpu -n 1024 -i ../data/tube.obj -o sampled.h5 -p sampled.pcd -r raw.pcd 
+$ pcl_viewer raw.pcd
+$ pcl_viewer sampled.pcd
+
+```
+
 
 # Credits
 * The code for FPS algorithm is adopted from the CUDA kernel at [GitHub: charlesq34/pointnet2](https://github.com/charlesq34/pointnet2/blob/master/tf_ops/sampling/tf_sampling_g.cu).
