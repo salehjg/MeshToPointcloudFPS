@@ -1,4 +1,3 @@
-#include "settings.hpp"
 #include "pcl.hpp"
 
 using namespace pcl;
@@ -17,7 +16,7 @@ using namespace std;
 CMesh2Pcl::CMesh2Pcl(string pathObjFile, string pathPcdFile){
     m_strPathObjFile = pathObjFile;
     m_strPathPcdFile = pathPcdFile;
-    m_bGeneratePcdFile = !(this->pathPcdFile == "");
+    m_bGeneratePcdFile = !(this->m_strPathPcdFile == "");
 }
 
 /**
@@ -28,7 +27,7 @@ CMesh2Pcl::CMesh2Pcl(string pathObjFile, string pathPcdFile){
 int CMesh2Pcl::Convert(){
     vtkSmartPointer<vtkPolyData> polydata1 = vtkSmartPointer<vtkPolyData>::New();
     vtkSmartPointer<vtkOBJReader> readerQuery = vtkSmartPointer<vtkOBJReader>::New();
-    readerQuery->SetFileName(m_strPathObjFile);
+    readerQuery->SetFileName(m_strPathObjFile.c_str());
     readerQuery->Update();
     polydata1 = readerQuery->GetOutput();
 
@@ -43,7 +42,7 @@ int CMesh2Pcl::Convert(){
     polydata1 = triangleMapper->GetInput();
 
     pcl::PointCloud<pcl::PointXYZRGBNormal>::Ptr cloud_1(new pcl::PointCloud<pcl::PointXYZRGBNormal>);
-    UniformSampling(polydata1, m_iDefaultNumSamples, write_normals, write_colors, *cloud_1);
+    UniformSampling(polydata1, m_iDefaultNumSamples, false, false, *cloud_1);
 
     // Voxelgrid
     VoxelGrid<PointXYZRGBNormal> grid_;
@@ -55,9 +54,14 @@ int CMesh2Pcl::Convert(){
 
     
     // Strip uninitialized normals and colors from cloud:
-    pcl::copyPointCloud(*voxel_cloud, *m_oCloudXYZ);
+    m_oCloudXYZ.width    = voxel_cloud->width;
+    m_oCloudXYZ.height   = voxel_cloud->height;
+    m_oCloudXYZ.is_dense = false;
+    m_oCloudXYZ.resize (m_oCloudXYZ.width * m_oCloudXYZ.height);
+
+    pcl::copyPointCloud(*voxel_cloud, m_oCloudXYZ);
     if(m_bGeneratePcdFile){
-        savePCDFileASCII(m_strPathPcdFile, *m_oCloudXYZ);
+        savePCDFileASCII(m_strPathPcdFile, m_oCloudXYZ);
     }
     return 0;
 }
@@ -275,5 +279,23 @@ void CMesh2Pcl::UniformSampling(
             cloud_out[i].b = static_cast<std::uint8_t>(c[2]);
         }
     }
+}
+
+void CMesh2Pcl::DumpToXyzPcd(const float *buff, const int nPoints, const string path){
+    pcl::PointCloud<pcl::PointXYZ> cloud;
+    // Fill in the cloud data
+    cloud.width    = nPoints;
+    cloud.height   = 1;
+    cloud.is_dense = false;
+    cloud.resize(cloud.width * cloud.height);
+
+    int i=0;
+    for (auto& point: cloud){
+        point.x = buff[i*3+0];
+        point.y = buff[i*3+1];
+        point.z = buff[i*3+2];
+        i++;
+    }
+    pcl::io::savePCDFileASCII (path, cloud);
 }
 

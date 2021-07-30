@@ -1,6 +1,5 @@
 #pragma once
 
-#include "settings.hpp"
 #include <pcl/visualization/pcl_visualizer.h>
 #include "pcl_vtk_compatibility.h"
 #include <pcl/io/pcd_io.h>
@@ -17,6 +16,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 
 //http://www1.coe.neu.edu/~ctd/ISY240/CodingGuidelines.htm
 class CMesh2Pcl{
@@ -27,6 +28,7 @@ public:
     int GetTensorSizeBytes();
     vector<int> GetTensorShape();
     void CloneToBuffRowMajor(float *outBuff);
+    void DumpToXyzPcd(const float *buff, const int nPoints, const string path);
 protected:
     double UniformDeviate(int seed);
     void RandomPointTriangle(
@@ -63,5 +65,5 @@ private:
     bool m_bGeneratePcdFile;
     const int m_iDefaultNumSamples = 100000;
     const float m_fDefaultLeafSize = 0.01f;
-    pcl::PointCloud<pcl::PointXYZ>::Ptr m_oCloudXYZ(new pcl::PointCloud<pcl::PointXYZ>);
-}
+    pcl::PointCloud<pcl::PointXYZ> m_oCloudXYZ;
+};

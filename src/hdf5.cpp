@@ -1,23 +1,12 @@
-#include "settings.hpp"
 #include "hdf5.hpp" 
+#include "H5Cpp.h"
 
 using namespace H5;
 
 int exportHdf5(
-        char *h5path, 
-        pcl::PointCloud<pcl::PointXYZ> &cloud){
-
-    const int len = 3*cloud.width*cloud.height;
-    float *data = new float[len];
-
-    int n=0;
-    for (const auto& point: cloud){
-        data[n*3+0]=point.x;
-        data[n*3+1]=point.y;
-        data[n*3+2]=point.z;
-        n++;
-    }
-
+        const char *h5path, 
+        float *data,
+        int nPoints, int nDim){
 
     const H5std_string  FILE_NAME( h5path );
     try
@@ -38,8 +27,8 @@ int exportHdf5(
          * size dataset.
          */
         hsize_t     dimsf[2];              // dataset dimensions
-        dimsf[0] = cloud.width * cloud.height;
-        dimsf[1] = 3; // x y z
+        dimsf[0] = nPoints;
+        dimsf[1] = nDim; // x y z
         DataSpace dataspace( 2, dimsf ); //RANK=2
         /*
          * Define datatype for the data in the file.
@@ -58,7 +47,6 @@ int exportHdf5(
          */
         dataset.write( data, PredType::NATIVE_FLOAT );
 
-        delete data;
     }  // end of try block
     // catch failure caused by the H5File operations
     catch( FileIException error )
