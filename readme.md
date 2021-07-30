@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="100%" src="https://github.com/salehjg/MeshToPointcloudFPS/blob/master/data/example.png">
+    <img width="50%" src="https://github.com/salehjg/MeshToPointcloudFPS/blob/master/data/example.png">
 </p>
 
 # MeshToPointcloudFPS
