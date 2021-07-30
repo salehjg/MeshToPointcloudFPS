@@ -2,8 +2,8 @@
 	<img width="100%" src="https://github.com/salehjg/MeshToPointcloudFPS/blob/master/data/example.png">
 </p>
 
-# FpsCpu
-`FpsCpu` is meant to be a simple `C++` based utility which converts mesh files (`*.obj`) to pointclouds. The data is down-sampled using Farthest Point Sampling algorithm (FPS). The results could be exported in various formats such as HDF5 (`*.h5`), PCL (`*.pcd`), and ...
+# MeshToPointcloudFPS
+The project is meant to provide a simple C++ based utility which converts mesh files (`*.obj`) to pointclouds. The data is down-sampled using Farthest Point Sampling algorithm (FPS). The user can export the results in various formats such as HDF5 (`*.h5`), PCL (`*.pcd`), and ...
 
 # Development Status
 - [x] CPU-only, Single-thread
