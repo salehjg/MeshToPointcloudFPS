@@ -52,5 +52,8 @@ $ pcl_viewer sampled.pcd
 
 # Credits
 * The code for FPS algorithm is adopted from the CUDA kernel at [GitHub: charlesq34/pointnet2](https://github.com/charlesq34/pointnet2/blob/master/tf_ops/sampling/tf_sampling_g.cu).
-* [GitHub: jamolnng/argparse](https://github.com/jamolnng/argparse)
+* [GitHub: jamolnng/argparse](https://github.com/jamolnng/argparse) (GPL3)
+* [GitHub: cnr-isti-vclab/vcglib](https://github.com/cnr-isti-vclab/vcglib) (GPL3)
+* [GitHub: cnr-isti-vclab/meshlab](https://github.com/cnr-isti-vclab/meshlab) (GPL3)
+* [ShapeNetCore-V2](https://shapenet.org/)
 * The example mesh file has been created by [Vectary.com](https://www.vectary.com/)
