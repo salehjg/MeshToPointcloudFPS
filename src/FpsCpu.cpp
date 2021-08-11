@@ -4,7 +4,7 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include "argparse.h"
-#include "pcl.hpp"
+#include "CMeshToPcl.hpp"
 #include "hdf5.hpp"
 
 using namespace argparse;
@@ -88,7 +88,7 @@ int main(int argc, const char** argv){
     const string pathObj(parser.get<string>("i"));
     const string pathPcd(parser.exists("r")?parser.get<string>("r"):"");
 
-    CMesh2Pcl *m_oMesh2Pcl = new CMesh2Pcl(pathObj, pathPcd);
+    CMeshToPcl *m_oMesh2Pcl = new CMeshToPcl(pathObj, pathPcd);
 
     m_oMesh2Pcl->Convert();
     
