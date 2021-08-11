@@ -36,7 +36,7 @@ private:
             vcg::vertex::Color4b,           /*  4b */
             vcg::vertex::VFAdjOcf,          /*  0b */
             vcg::vertex::MarkOcf,           /*  0b */
-            vcg::vertex::TexCoordfOcf,      /*  0b */
+            vcg::vertex::TexCoord2f,      /*  0b  TexCoordfOcf*/
             vcg::vertex::CurvaturefOcf,     /*  0b */
             vcg::vertex::CurvatureDirfOcf,  /*  0b */
             vcg::vertex::RadiusfOcf         /*  0b */

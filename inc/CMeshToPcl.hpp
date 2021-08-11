@@ -24,6 +24,7 @@ using namespace std;
 class CMeshToPcl{
 public:
     CMeshToPcl(string pathObjFile, string pathPcdFile);
+    bool FileExist(const std::string& name);
     int Convert();
     int MakeInputObjPureTriMesh();
     int GetTensorSizeWords();

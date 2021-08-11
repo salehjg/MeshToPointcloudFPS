@@ -1,4 +1,5 @@
 #include "CMeshToPcl.hpp"
+#include <sys/stat.h>
 
 using namespace pcl;
 using namespace pcl::io;
@@ -16,9 +17,14 @@ using namespace std;
 CMeshToPcl::CMeshToPcl(string pathObjFile, string pathPcdFile){
     m_strPathRawObjFile = pathObjFile;
     m_strPathObjFile.append(m_strPathRawObjFile);
-    m_strPathObjFile.append(".trimesh.obj");
+    m_strPathObjFile.append(".tri");
     m_strPathPcdFile = pathPcdFile;
     m_bGeneratePcdFile = !(this->m_strPathPcdFile == "");
+}
+
+inline bool CMeshToPcl::FileExist(const std::string& name){
+    struct stat buffer;
+    return (stat (name.c_str(), &buffer) == 0);
 }
 
 /**
@@ -28,7 +34,21 @@ CMeshToPcl::CMeshToPcl(string pathObjFile, string pathPcdFile){
  */
 int CMeshToPcl::Convert(){
     int stat = MakeInputObjPureTriMesh();
-    if(stat!=0) return stat;
+    if(stat!=0) {
+        return stat;
+    }
+
+    {
+        bool statF=false;
+        int timeout = 100;
+        while(timeout-->0){
+            if(FileExist(m_strPathObjFile)){
+                statF = true;
+                break;
+            }
+        }
+        if(!statF) return 3;
+    }
 
     vtkSmartPointer<vtkPolyData> polydata1 = vtkSmartPointer<vtkPolyData>::New();
     vtkSmartPointer<vtkOBJReader> readerQuery = vtkSmartPointer<vtkOBJReader>::New();
