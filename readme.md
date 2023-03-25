@@ -56,4 +56,4 @@ $ pcl_viewer sampled.pcd
 * [GitHub: cnr-isti-vclab/vcglib](https://github.com/cnr-isti-vclab/vcglib) (GPL3)
 * [GitHub: cnr-isti-vclab/meshlab](https://github.com/cnr-isti-vclab/meshlab) (GPL3)
 * [ShapeNetCore-V2](https://shapenet.org/)
-* The example mesh file has been created by [Vectary.com](https://www.vectary.com/)
+* The example mesh file has been created with [Vectary.com](https://www.vectary.com/)
